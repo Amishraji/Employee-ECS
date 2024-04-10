@@ -55,7 +55,7 @@ public class SecurityConfig {
    
     @Bean
     public JwtDecoder jwtDecoder() {
-        return JwtDecoders.fromIssuerLocation("http://keycloak.route53testdemo.fun/realms/oauth");
+        return JwtDecoders.fromIssuerLocation("https://keycloak.route53testdemo.fun/realms/oauth");
     }
     
 }

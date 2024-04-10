@@ -19,15 +19,11 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 
 @Configuration
-@Component
 public class AppConfig {
 	    
-//    @Value("${Access_Key}")
-//    private String accessKey;
-//    @Value("${Secret_Access_Key}")
-//    private String secretkey;
 
     private Gson gson = new Gson();
+    
     @Bean
     public DataSource dataSource() {
         AwsSecrets secrets = getSecret();
@@ -51,8 +47,9 @@ public class AppConfig {
 
         AWSSecretsManager client = AWSSecretsManagerClientBuilder.standard()
             .withRegion(region)
-            .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
             .build();
+//            .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+            
 
         GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
             .withSecretId(secretName);

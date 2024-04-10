@@ -1,0 +1,55 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "employee-container",
+            "image": "992382462614.dkr.ecr.us-west-2.amazonaws.com",
+            "cpu": 256,
+            "memory": 512,
+            "portMappings": [
+                {
+                    "containerPort": 5000,
+                    "hostPort": 5000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "aws_access_key_id": "${{ secrets.AWS_ECS_ACCESS_KEY_ID }}",
+                    "aws_secret_access_key": "${{ secrets.AWS_ECS_SECRET_ACCESS_KEY }}"
+                  }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/employee-family",
+                    "awslogs-region": "us-west-2",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "employee-family",
+    "executionRoleArn": "arn:aws:iam::992382462614:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": [{
+        "key": "employee",
+        "value": "Latest"
+    }]
+}

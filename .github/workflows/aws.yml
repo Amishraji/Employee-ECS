@@ -1,0 +1,61 @@
+name: Deploy to Amazon ECS
+on:
+  push:
+    branches:
+      - main
+env:
+  AWS_REGION: us-west-2
+  ECS_CLUSTER: demo-app
+  CONTAINER_NAME1: employee-container
+  ECS_SERVICE1: employee-service
+  ECS_TD1: .github/workflows/employee.json
+ 
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ECS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_ECS_SECRET_ACCESS_KEY }}
+          aws-region: "us-west-2"
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image1
+        env:
+          ECR_REGISTRY: "992382462614.dkr.ecr.us-west-2.amazonaws.com"
+          ECR_REPOSITORY: "new-ecr-cd"
+          IMAGE_TAG: employee
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def-1
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TD1 }}
+          container-name: ${{ env.CONTAINER_NAME1 }}
+          image: ${{ steps.build-image1.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-1.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE1 }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+
