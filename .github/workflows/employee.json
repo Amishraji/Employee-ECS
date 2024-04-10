@@ -13,6 +13,15 @@
                     "appProtocol": "http"
                 }
             ],
+            "environment": [
+        {
+          "name": "AWS_ACCESS_KEY_ID",
+          "value": "{{resolve:ssm:arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/access_key_id:1}}"
+        },
+        {
+          "name": "AWS_SECRET_ACCESS_KEY",
+          "value": "{{resolve:ssm:arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/secret_access_key:1}}"
+        }],
             "essential": true,
             "mountPoints": [],
             "volumesFrom": [],
