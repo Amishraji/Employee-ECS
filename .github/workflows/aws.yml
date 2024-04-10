@@ -1,8 +1,6 @@
 name: Deploy to Amazon ECS
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch: 
 env:
   AWS_REGION: us-west-2
   ECS_CLUSTER: demo-app
