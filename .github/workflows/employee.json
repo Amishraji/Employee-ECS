@@ -16,11 +16,11 @@
             "environment": [
         {
           "name": "AWS_ACCESS_KEY_ID",
-          "value": "{{resolve:ssm:arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/access_key_id:1}}"
+          "value": "{{arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/access_key_id/20240410/us-west-2/alias/aws/ssm/aws4_request}}"
         },
         {
           "name": "AWS_SECRET_ACCESS_KEY",
-          "value": "{{resolve:ssm:arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/secret_access_key:1}}"
+          "value": "{{arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/secret_access_key/20240410/us-west-2/alias/aws/ssm/aws4_request}}"
         }],
             "essential": true,
             "mountPoints": [],
