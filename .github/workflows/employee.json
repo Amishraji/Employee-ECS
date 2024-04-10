@@ -16,11 +16,11 @@
             "secrets": [
         {
           "name": "AWS_ACCESS_KEY_ID",
-          "valueFrom": "{{arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/access_key_id}}"
+          "valueFrom": "arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/access_key_id"
         },
         {
           "name": "AWS_SECRET_ACCESS_KEY",
-          "valueFrom": "{{arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/secret_access_key}}"
+          "valueFrom": "arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/secret_access_key"
         }],
             "essential": true,
             "mountPoints": [],
