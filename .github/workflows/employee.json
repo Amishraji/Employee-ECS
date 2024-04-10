@@ -13,14 +13,14 @@
                     "appProtocol": "http"
                 }
             ],
-            "environment": [
+            "secrets": [
         {
           "name": "AWS_ACCESS_KEY_ID",
-          "value": "{{arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/access_key_id/20240410/us-west-2/alias/aws/ssm/aws4_request}}"
+          "valueFrom": "{{arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/access_key_id}}"
         },
         {
           "name": "AWS_SECRET_ACCESS_KEY",
-          "value": "{{arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/secret_access_key/20240410/us-west-2/alias/aws/ssm/aws4_request}}"
+          "valueFrom": "{{arn:aws:ssm:us-west-2:992382462614:parameter/demoapp/secret_access_key}}"
         }],
             "essential": true,
             "mountPoints": [],
